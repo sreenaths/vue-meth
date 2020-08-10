@@ -1,6 +1,6 @@
-const MAX_PARTS = 3;
+const MAX_SPECIFIERS = 3;
 
-interface IPart {
+export interface ISpecifier {
   base: number;
   unit: string;
 }
@@ -11,7 +11,7 @@ const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 
-const PARTS: IPart[] = [
+const FORMAT: ISpecifier[] = [
   {
     base: DAY,
     unit: 'day',
@@ -34,11 +34,11 @@ const PARTS: IPart[] = [
   },
 ];
 
-export default function fmtDuration(value: number): string {
+export default function fmtDuration(value: number, format: ISpecifier[] = FORMAT): string {
   const durationParts: string[] = [];
 
-  for (let i = 0; i < PARTS.length && durationParts.length < MAX_PARTS; i++) {
-    const part: IPart = PARTS[i];
+  for (let i = 0; i < format.length && durationParts.length < MAX_SPECIFIERS; i++) {
+    const part: ISpecifier = format[i];
     const val: number = Math.floor(value / part.base);
     if (val) {
       durationParts.push(val + part.unit);
